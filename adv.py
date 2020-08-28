@@ -25,9 +25,27 @@ world.print_rooms()
 
 player = Player(world.starting_room)
 
+
+
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
+
+#mapped path
 traversal_path = []
+
+#doubling black
+backtrack = {'e':'w','w':'e','n':'s','s':'n'}
+#current room
+cache = {}
+traversed = []
+touched = set()
+
+#while the lengtb of touched is <= the len of the graph, check if the current room is in set, if it's not then add it. add the room to cache and use get_exit to get possible movements. for each room add the movements to cache[room] go through each of the possible movements
+# 
+
+
+
+
 
 
 
@@ -51,12 +69,12 @@ else:
 #######
 # UNCOMMENT TO WALK AROUND
 #######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+# player.current_room.print_room_description(player)
+# while True:
+#     cmds = input("-> ").lower().split(" ")
+#     if cmds[0] in ["n", "s", "e", "w"]:
+#         player.travel(cmds[0], True)
+#     elif cmds[0] == "q":
+#         break
+#     else:
+#         print("I did not understand that command.")
