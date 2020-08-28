@@ -30,18 +30,64 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 
-#mapped path
-traversal_path = []
 
-#doubling black
+
+#while the length of touched is <= the len of the graph, check if the current room is in set, if it's not then add it. add the room to cache and use get_exit to get possible movements. for each room add the movements to cache[room] go through each of the possible movements
+
+# You may find the commands `player.current_room.id`, `player.current_room.get_exits()` and `player.travel(direction)` useful.
+
+traversal_path = []
 backtrack = {'e':'w','w':'e','n':'s','s':'n'}
-#current room
+
+
 cache = {}
-traversed = []
 touched = set()
 
-#while the lengtb of touched is <= the len of the graph, check if the current room is in set, if it's not then add it. add the room to cache and use get_exit to get possible movements. for each room add the movements to cache[room] go through each of the possible movements
-# 
+moves_queue = []
+
+#total rooms touched is less than the graph size
+while len(touched) < len(room_graph):
+
+#start with the first room via player.current_room.id
+    room = player.current_room.id
+
+#if not in the set add to touched with value of possible movements
+    if room not in touched:
+        touched.add(room)      
+        cache[room] = player.current_room.get_exits()
+
+
+
+#while there are possible moves to be made
+    while len(cache[room]) >= 0:
+
+        if len(cache[room]) > 0:
+            # grab the first possible movement, remove from cache                                
+            movement = cache[room].pop()
+
+            #if it's not in the set, add it to the queue of moves and to the traversal path 
+            if player.current_room.get_room_in_direction(movement).id not in touched:
+                moves_queue.append(movement)
+
+            #add the move to the trav path andn make the move to update current_room
+                traversal_path.append(movement)
+                player.travel(movement)                                        
+                break
+
+        # if there are no more moves to make, 
+        elif len(cache[room]) == 0:
+
+            # grab the last move and add it to the trav path and then move the player
+
+            back = moves_queue.pop()
+            
+            
+            traversal_path.append(backtrack[back])
+            print(len(traversal_path))
+
+            
+            player.travel(backtrack[back])
+            break
 
 
 
